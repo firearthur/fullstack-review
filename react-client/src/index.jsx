@@ -16,8 +16,9 @@ class App extends React.Component {
   
   
   search (term) {
-    console.log(`${term} was searched`);
     // TODO
+    console.log('search is called');
+    
   }
 
   componentDidMount(){ //render the repos when the page has finished loading 
@@ -30,8 +31,8 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
+      <RepoList repos={this.state.repos}/>
     </div>)
   }
 }

@@ -7,6 +7,7 @@ const RepoList = (props) => (
     {props.repos.map((repo, key)=>(
       <div key = {key}>
         <h3>Repo name: {repo.name}</h3>
+        <small>ID: {repo.id}</small>
         <h5>Owner: {repo.owner}</h5>
         <strong>Stars: {repo.starsCount}</strong>
       </div>

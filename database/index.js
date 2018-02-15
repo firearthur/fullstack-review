@@ -5,11 +5,12 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   // we're connected!
-  console.log(`we're connected!`);
+  
 });
 
 let repoSchema = mongoose.Schema({
   // TODO: your schema here!
+  id:{ type : Number , unique : true, dropDups: true },
   name: String,
   starsCount: Number,
   owner: String,
@@ -29,10 +30,11 @@ let Repo = mongoose.model('Repo', repoSchema);
 
 
 let save = (repos) => {
-  console.log('repos from database index.js', repos);
+  // console.log('repos from database index.js', repos);
   repos.forEach((repo) => {
 
     Repo({
+      id: repo.id,
       name: repo.name,
       starsCount: repo.stargazers_count,
       owner: repo.owner.login,
@@ -40,19 +42,25 @@ let save = (repos) => {
       ownersUrl: repo.owner.url,
     }).save();
   });
-  // repos.forEach((repo)=>{
-  //   repo.save((err)=>{console.log('error from save repos. Error:', err)});
-  // });
+
 
 }
 
 
 
 let getRepos = (callback) => {
-  Repo.find(function (err, repos) {
-    if (err) return console.log(err);
-    callback(repos);
-  })
+
+  Repo.
+    find().
+    limit(25).
+    sort('-starsCount').
+    select('').
+    exec(callback);
+
+  // Repo.find(function (err, repos) {
+  //   if (err) return console.log(err);
+  //   callback(repos);
+  // })
 };
 
 module.exports.getRepos = getRepos;
