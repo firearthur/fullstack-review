@@ -1,4 +1,5 @@
 import React from 'react';
+const apiCallers = require('./apiCallers');
 
 class Search extends React.Component {
   constructor(props) {
@@ -6,6 +7,8 @@ class Search extends React.Component {
     this.state = {
       term: ''
     }
+    this.onChange = this.onChange.bind(this);
+    this.search = this.search.bind(this);
   }
 
   onChange (e) {
@@ -16,6 +19,10 @@ class Search extends React.Component {
 
   search() {
     this.props.onSearch(this.state.term);
+    let username = this.state.term;
+    console.log('this is the username from search react', username);
+    apiCallers.aj.post('/repos', username);
+    //try emptying the input filed after searching
   }
 
   render() {

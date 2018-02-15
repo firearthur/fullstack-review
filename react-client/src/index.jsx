@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
+import apiCallers from './components/apiCallers.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,10 +13,18 @@ class App extends React.Component {
     }
 
   }
-
+  
+  
   search (term) {
     console.log(`${term} was searched`);
     // TODO
+  }
+
+  componentDidMount(){ //render the repos when the page has finished loading 
+    apiCallers.aj.get('/repos', (repos)=>{
+      this.setState({repos:repos}); 
+    });
+    
   }
 
   render () {
