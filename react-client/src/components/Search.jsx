@@ -9,7 +9,6 @@ class Search extends React.Component {
     }
     this.onChange = this.onChange.bind(this);
     this.search = this.search.bind(this);
-    console.log('prooops',props);
   }
 
   onChange (e) {
@@ -19,10 +18,9 @@ class Search extends React.Component {
   }
 
   search() {
-    this.props.onSearch(this.state.term);
     let username = this.state.term;
-    console.log('this is the username from search react', username);
-    apiCallers.aj.post('/repos', username);
+    apiCallers.aj.post('/repos', username, this.props.onSearch);
+    console.log('The click handler(search) has been invoked');
     //try emptying the input filed after searching
   }
 

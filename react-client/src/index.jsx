@@ -11,27 +11,37 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
-
+    this.search = this.search.bind(this);
+    // this.get = this.get.bind(this);
   }
   
   
-  search (term) {
-    // TODO
-    console.log('search is called');
-    
-  }
-
-  componentDidMount(){ //render the repos when the page has finished loading 
+  search () {
+    // console.log('in big search and about to summon a get on repos');
+    let indexComponent = this;
     apiCallers.aj.get('/repos', (repos)=>{
-      this.setState({repos:repos}); 
+      console.log('im in big search in the callback about to set state', repos);
+      indexComponent.setState({repos:repos}); 
+      // console.log('i just set the state');
     });
     
+
+  }
+
+  // get(repos) {
+  //   this.setState({repos:repos});
+  // }
+
+  componentDidMount(){ //render the repos when the page has finished loading 
+    // apiCallers.aj.get('/repos', (repos)=>{
+    //   this.setState({repos:repos}); 
+    // });
   }
 
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <Search onSearch={this.search.bind(this)}/>
+      <Search onSearch={this.search}/>
       <RepoList repos={this.state.repos}/>
     </div>)
   }

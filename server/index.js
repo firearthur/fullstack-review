@@ -13,8 +13,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.post('/repos', function (req, res) {
-  githubAPI.getReposByUsername(req.body.username);
-  res.send(201);
+  githubAPI.getReposByUsername(req.body.username, (err, data)=>{
+    if(err) {
+      res.send(err);
+    }
+    if(data) {
+      res.send(201);
+    }
+  });
 });
 
 app.get('/repos', function (req, res) {
